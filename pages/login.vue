@@ -1,10 +1,8 @@
 <template>
   <v-layout row>
     <v-flex xs12 sm6 offset-sm3>
-      <v-toolbar
-        color="orange darken-1"
-        dark>
-        <v-toolbar-title>Vue Sign</v-toolbar-title>
+      <v-toolbar color="orange lighten-5">
+        <v-toolbar-title class="orange--text">Login</v-toolbar-title>
       </v-toolbar>
       <v-card>
         <v-card-text>
@@ -18,6 +16,7 @@
                     key="login-email"
                     type="email"
                     v-model="email"
+                    :rules="[formRules.email, formRules.required]"
                     required
                   ></v-text-field>
                 </v-flex>
@@ -30,13 +29,14 @@
                     key="login-password"
                     type="password"
                     v-model="password"
+                    :rules="[formRules.required]"
                     required
                   ></v-text-field>
                 </v-flex>
               </v-layout>
               <v-layout row>
                 <v-flex xs12>
-                  <v-btn type="submit" color="orange" block dark>Login</v-btn>
+                  <v-btn type="submit" color="orange lighten-5" class="orange--text" block dark>Login</v-btn>
                 </v-flex>
               </v-layout>
               <v-layout row>
@@ -59,6 +59,10 @@
       return {
         email: '',
         password: '',
+        formRules: {
+          email: v => /\S+@\S+\.\S+/.test(v) || "Not a valid Email address.",
+          required: value => !!value || "Value is required to login."
+        }
       }
     },
   }
