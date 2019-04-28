@@ -81,6 +81,11 @@
                   <v-btn type="submit" color="orange lighten-5" class="orange--text" block>Submit</v-btn>
                 </v-flex>
               </v-layout>
+              <v-layout row>
+                <v-flex xs12>
+                  <p class="text-xs-right mt-3">Already have an account? <a href="/login" class="purple--text">LOGIN</a></p>
+                </v-flex>
+              </v-layout>
             </form>
           </v-container>
         </v-card-text>
