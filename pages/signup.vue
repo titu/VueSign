@@ -7,7 +7,7 @@
       <v-card>
         <v-card-text>
           <v-container>
-            <form>
+            <form @submit.prevent="onSignup">
               <v-layout row>
                 <v-flex xs12>
                   <v-text-field
@@ -78,12 +78,18 @@
               </v-layout>
               <v-layout row>
                 <v-flex xs12>
-                  <v-btn type="submit" color="orange lighten-5" class="orange--text" block>Submit</v-btn>
+                  <v-btn
+                    type="submit"
+                    color="orange lighten-5"
+                    class="orange--text"
+                    block>Submit
+                  </v-btn>
                 </v-flex>
               </v-layout>
               <v-layout row>
                 <v-flex xs12>
-                  <p class="text-xs-right mt-3">Already have an account? <a href="/login" class="purple--text">LOGIN</a></p>
+                  <p class="text-xs-right mt-3">Already have an account? <a href="/login" class="purple--text">LOGIN</a>
+                  </p>
                 </v-flex>
               </v-layout>
             </form>
@@ -95,6 +101,9 @@
 </template>
 
 <script>
+
+  import { mapGetters } from 'vuex';
+
   export default {
     name: "signup",
     data() {
@@ -112,6 +121,31 @@
         }
       }
     },
+
+    watch: {
+      isUserSignedIn(value) {
+        if (value) {
+          this.$router.push('/')
+        }
+      }
+    },
+
+    computed: {
+      user () {
+        return this.$store.getters.isUserSignedIn;
+      },
+      ...mapGetters['isUserSignedIn']
+    },
+
+    methods: {
+      onSignup() {
+        this.$store.dispatch('signUp', {email: this.email, password: this.password})
+          .then(
+            user => {
+            }
+          )
+      }
+    }
   }
 </script>
 
