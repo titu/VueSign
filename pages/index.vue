@@ -9,19 +9,30 @@
       sm8
       md6
     >
-      Vue Sign Dashboard
+      Vue Sign Dashboard {{isUserSignedIn}}
     </v-flex>
   </v-layout>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-import VuetifyLogo from '~/components/VuetifyLogo.vue'
 
-export default {
-  components: {
-    Logo,
-    VuetifyLogo
+  import {mapGetters} from 'vuex';
+
+  export default {
+
+    watch: {
+      isUserSignedIn: {
+        immediate: true,
+        handler(value) {
+          if (!value) {
+            this.$router.push('/login')
+          }
+        }
+      }
+    },
+
+    computed: {
+      ...mapGetters(['isUserSignedIn'])
+    }
   }
-}
 </script>
