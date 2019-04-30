@@ -7,7 +7,7 @@
       <v-card>
         <v-card-text>
           <v-container>
-            <form>
+            <form @submit.prevent="onSignIn">
               <v-layout row>
                 <v-flex xs12>
                   <v-text-field
@@ -63,6 +63,12 @@
           email: v => /\S+@\S+\.\S+/.test(v) || "Not a valid Email address.",
           required: value => !!value || "Value is required to login."
         }
+      }
+    },
+
+    methods: {
+      onSignIn() {
+        this.$store.dispatch('signIn', {email: this.email, password: this.password})
       }
     },
   }
