@@ -6,6 +6,7 @@
       :clipped="clipped"
       fixed
       app
+      v-if="isUserSignedIn"
     >
       <v-list>
         <v-list-tile
@@ -28,6 +29,7 @@
       :clipped-left="clipped"
       fixed
       app
+      v-if="isUserSignedIn"
     >
       <v-toolbar-side-icon @click="drawer = !drawer" />
       <v-btn
@@ -61,6 +63,9 @@
 </template>
 
 <script>
+
+  import {mapGetters} from 'vuex';
+
   export default {
     data() {
       return {
@@ -79,6 +84,10 @@
         rightDrawer: false,
         title: 'Vue Sign'
       }
+    },
+
+    computed: {
+      ...mapGetters(['isUserSignedIn'])
     }
   }
 </script>
