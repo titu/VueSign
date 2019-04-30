@@ -34,5 +34,19 @@ export const actions = {
       .catch(
         err => console.log(err)
       )
+  },
+  signIn({commit}, payload) {
+    const {email, password} = payload;
+
+    return firebase.auth().signInWithEmailAndPassword(email, password)
+      .then(
+        user => {
+          commit('setUser', user);
+          return user;
+        }
+      )
+      .catch(
+        err => console.log(err)
+      )
   }
 };
