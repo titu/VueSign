@@ -6,29 +6,29 @@ export const state = () => ({
 });
 
 export const getters = {
-  loggedInUser (state) {
-    return state.user;
-  },
-  isUserSignedIn (state) {
+  isUserSignedIn(state) {
     return !_.isNil(state.user);
   }
 };
 
 export const mutations = {
-  setUser (state, payload) {
-    state.user = payload;
+  setUser(state, user) {
+    state.user = {
+      email: user.email,
+      id: user.uid
+    };
   }
 };
 
 export const actions = {
-  signUp ({commit}, payload) {
+  signUp({commit}, payload) {
     const {email, password} = payload;
 
     return firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(
-        user => {
-          commit('setUser', user);
-          return user;
+        data => {
+          commit('setUser', data.user);
+          return data.user;
         }
       )
       .catch(

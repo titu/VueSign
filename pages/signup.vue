@@ -102,7 +102,7 @@
 
 <script>
 
-  import { mapGetters } from 'vuex';
+  import {mapGetters} from 'vuex';
 
   export default {
     name: "signup",
@@ -131,19 +131,12 @@
     },
 
     computed: {
-      user () {
-        return this.$store.getters.isUserSignedIn;
-      },
-      ...mapGetters['isUserSignedIn']
+      ...mapGetters(['isUserSignedIn'])
     },
 
     methods: {
       onSignup() {
         this.$store.dispatch('signUp', {email: this.email, password: this.password})
-          .then(
-            user => {
-            }
-          )
       }
     }
   }
