@@ -13,10 +13,15 @@ export const getters = {
 
 export const mutations = {
   setUser(state, user) {
-    state.user = {
-      email: user.email,
-      id: user.uid
-    };
+    if (user && user.email && user.uid) {
+      state.user = {
+        email: user.email,
+        id: user.uid
+      };
+    }
+    else {
+      state.user = null;
+    }
   }
 };
 
@@ -24,7 +29,9 @@ export const actions = {
   signUp({commit}, payload) {
     const {email, password} = payload;
 
-    return firebase.auth().createUserWithEmailAndPassword(email, password)
+    return firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
       .then(
         data => {
           commit('setUser', data.user);
@@ -38,13 +45,26 @@ export const actions = {
   signIn({commit}, payload) {
     const {email, password} = payload;
 
-    return firebase.auth().signInWithEmailAndPassword(email, password)
+    return firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
       .then(
         user => {
           commit('setUser', user);
           return user;
         }
       )
+      .catch(
+        err => console.log(err)
+      )
+  },
+  signOut({commit}) {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        commit('setUser', null);
+      })
       .catch(
         err => console.log(err)
       )

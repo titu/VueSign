@@ -71,13 +71,17 @@
     data() {
       return {
         clipped: false,
-        drawer: false,
+        drawer: true,
         fixed: false,
         items: [
           {
             icon: 'apps',
             title: 'Dashboard',
             to: '/'
+          }, {
+            icon: 'exit_to_app',
+            title: 'Logout',
+            to: '/login'
           }
         ],
         miniVariant: false,
@@ -90,6 +94,13 @@
       this.$nextTick(() => {
         auth().onAuthStateChanged(this.handleAuthStateChange);
       });
+    },
+    watch: {
+      '$route'(to) {
+        if (to.name === 'login') {
+          this.$store.dispatch('signOut');
+        }
+      }
     },
     computed: {
       ...mapGetters(['isUserSignedIn'])
