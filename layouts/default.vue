@@ -113,7 +113,9 @@
             this.$router.push('/')
           }
         } else {
-          this.$router.push('/login')
+          if (!this.$route.name === 'signup') {
+            this.$router.push('/login')
+          }
         }
       }
     }
